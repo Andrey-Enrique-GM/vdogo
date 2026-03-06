@@ -7,7 +7,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# underscope methods and properties
+@app.route('/welcome')
+def welcome():
+    return render_template('welcome.html')
 
 if __name__ == '__main__':
     app.run()
