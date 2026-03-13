@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from entities.user import User
 
 app = Flask(__name__)
 
@@ -14,15 +15,15 @@ def signup():
 def welcome():
     return render_template('welcome.html')
 
-@app.route('/api/user', methods=['POST'])
+@app.route('/api/users', methods=['POST'])
 def create_user():
     data = request.get_json()
 
     name = data.get('name')
     email = data.get('email')
+    password = data.get('password')
 
-    print(f"Nombre={name}")
-    print(f"Email={email}")
+    User.save(name, email, password)
 
     return jsonify({"success": True})
 
