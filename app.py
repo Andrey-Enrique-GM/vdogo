@@ -1,21 +1,16 @@
 from flask import Flask, render_template, request, jsonify
 from entities.user import User
-import pymysql
 
 app = Flask(__name__)
-
-
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
-
-@app.route('/signup')
+@app.route("/signup")
 def signup():
-    return render_template('signup.html')
-
+    return render_template("signup.html")
 
 
 @app.route('/welcome')
@@ -23,14 +18,13 @@ def welcome():
     return render_template('welcome.html')
 
 
-
-@app.route('/api/users', methods=['POST'])
+@app.route('/api/users', methods=["POST"])
 def create_user():
     data = request.get_json()
 
-    name = data.get('name')
-    email = data.get('email')
-    password = data.get('password')
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
 
     if User.check_email_exists(email):
         return jsonify({"success": False, "message": "El correo electrónico ingresado ya se encuentra registrado."}), 409
@@ -41,25 +35,24 @@ def create_user():
         return jsonify({"success": False, "message": "Ocurrió un error al crear su cuenta. Intente de nuevo"}), 500
 
 
-
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
 
-    email = data.get('email')
-    password = data.get('password')
+    email = data.get("email")
+    password = data.get("password")
 
     user = User.check_login(email, password)
-
     if user:
+
         return jsonify({
-            "success": True, 
-            "message": "Inicio iniciada correctamente."
+            "success": True,
+            "message": "Sesión iniciada correctamente"
         }), 200
     else:
         return jsonify({
-            "success": False, 
-            "message": "Los datos de acceso ingresados no son correctos. Intente de nuevo."
+            "success": False,
+            "message": "Los datos de acceso ingresados no son correctos."
         }), 401
 
 
