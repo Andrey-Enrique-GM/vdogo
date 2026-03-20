@@ -1,9 +1,10 @@
 import pymysql
 
 def get_connection():
-    pymysql.connect(
+    return pymysql.connect(
         host = "localhost",
         user = "root",
-        password = "admin",
-        database = "dogodb"
+        password = "chihuahua",
+        database = "dogodb",
+        port = 3307
     )
